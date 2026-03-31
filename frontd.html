@@ -3,9 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TEMPO</title>
+    <title>Previsão do Tempo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> <!--esse link serve para possibilitar o uso do location dot e da imagem de lupa-->
+    <link rel="stylesheet" href="frontd.css">
 </head>
 <body>
     
+    <!--essa div serve para o local de busca das cidades-->
+    <div id="container">
+        <form id="search">
+            <i class="fa-solid fa-location-dot"></i>
+            <input type="search" 
+            name="city_name" 
+            id="city_name" 
+            placeholder="Buscar cidade">
+
+            <button type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+
+        </form>
+    </div>
+
+
 </body>
 </html>

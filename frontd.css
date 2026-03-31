@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap');
+
+* { /* fonte para todo o projeto */
+    font-family: "Libre Caslon Text", serif;
+    font-weight: 500;
+    font-style: normal;
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+
+    background-image: url();
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+#container {    
+    background-color: white;
+    border-radius: 20px;
+    padding: 18px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 1);
+}
+
+#search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 2px solid ;
+    border-radius: 10px;
+    padding: 4px 12px;
+}
+
+#search input {
+    border: none;
+    background-color: transparent;
+    font-size: 100%;
+    width: 100%;
+}
+
+#search input:focus-visible {
+    outline: none;
+}
+
+#search button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
