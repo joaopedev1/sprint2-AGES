@@ -2,7 +2,7 @@
 
 * { /* fonte para todo o projeto */
     font-family: "Libre Caslon Text", serif;
-    font-weight: 500;
+    font-weight: 700;
     font-style: normal;
 
     margin: 0;
@@ -15,15 +15,19 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-
-    background-image: url();
+   
+    background-image: url(toalha\ versao\ final.png);
+    background-position: center center;
+    background-size: cover;
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-attachment: fixed;
+    background-color: rgba(15, 32, 63, 1)
+    
 }
 
 #container {    
-    background-color: white;
-    border-radius: 20px;
+    background-color: rgba(15, 32, 73, 0.96);
+    border-radius: 24px;
     padding: 18px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 1);
 }
@@ -32,9 +36,10 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    border: 2px solid ;
+    border: 3px solid ;
     border-radius: 10px;
     padding: 4px 12px;
+    color: rgba(195, 155, 85, 1);
 }
 
 #search input {
@@ -42,6 +47,7 @@ body {
     background-color: transparent;
     font-size: 100%;
     width: 100%;
+    color: rgba(195, 155, 85, 1);
 }
 
 #search input:focus-visible {
@@ -52,4 +58,9 @@ body {
     background-color: transparent;
     border: none;
     cursor: pointer;
+    color: rgba(195, 155, 85, 1);
+}
+
+#search button:hover {
+    transform: scale(1.2);
 }
