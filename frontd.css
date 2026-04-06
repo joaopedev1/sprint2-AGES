@@ -16,7 +16,7 @@ body {
     justify-content: center;
     height: 100vh;
    
-    background-image: url(fundotela.png);
+    background-image: url(fundotela.svg);
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
