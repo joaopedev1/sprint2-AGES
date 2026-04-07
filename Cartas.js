@@ -1,4 +1,4 @@
-/* ── MAPEAMENTO clima → carta ── */
+/* MAPEAMENTO clima - carta */
 const CARTA_MAP = {
     sol:        { img: 'Sun.jpeg',    nome: 'The Sun',           desc: 'Céu limpo'           },
     chuva:      { img: 'Rain.jpeg',   nome: 'The Rain',          desc: 'Chuva'                },
@@ -7,7 +7,7 @@ const CARTA_MAP = {
     noite:      { img: 'Night.jpeg',  nome: 'The Night',         desc: 'Noite estrelada'      },
 };
 
-/* WMO codes → condição */
+/* WMO codes - condição */
 function wmoParaCondicao(code, isDay) {
     if ([0,1].includes(code))                    return isDay ? 'sol' : 'noite';
     if ([2,3,45,48].includes(code))              return 'nublado';
@@ -26,7 +26,7 @@ const PICOS   = [6, 18, 30, 42, 54, 66, 78, 90];
 let dadosDias    = [];  /* previsão diária */
 let dadosHorario = [];  /* previsão horária */
 
-/* ── BUSCA ── */
+/* BUSCA */
 async function buscarClima() {
     const cidade = document.getElementById('cidade-input').value.trim();
     if (!cidade) return;
@@ -46,14 +46,11 @@ async function buscarClima() {
         const wRes  = await fetch(
             `https://api.open-meteo.com/v1/forecast` +
             `?latitude=${latitude}&longitude=${longitude}` +
-            `&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max,windspeed_10m_max` +
-            `&hourly=temperature_2m,weathercode` +
-            `&current_weather=true` +
-            `&timezone=auto&forecast_days=8`
+            `&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max,windspeed_10m_max` + `&hourly=temperature_2m,weathercode` + `&current_weather=true` + `&timezone=auto&forecast_days=8`
         );
         const wData = await wRes.json();
 
-        dadosDias    = processarDiario(wData);
+        dadosDias = processarDiario(wData);
         dadosHorario = wData.hourly;
 
         erroEl.textContent = '';
@@ -64,7 +61,7 @@ async function buscarClima() {
     }
 }
 
-/* ── PROCESSA DADOS DIÁRIOS ── */
+/* PROCESSA DADOS DIÁRIOS */
 function processarDiario(data) {
     const { daily, current_weather } = data;
     return daily.time.map((dateStr, i) => {
@@ -86,7 +83,7 @@ function processarDiario(data) {
     });
 }
 
-/* ── INICIA CENA ── */
+/* INICIA CENA */
 function iniciarCena() {
     document.getElementById('busca').style.display = 'none';
     document.getElementById('cena').style.display  = 'block';
@@ -105,7 +102,7 @@ function iniciarCena() {
     }, 600);
 }
 
-/* ── BARALHO ── */
+/* BARALHO */
 function criarBaralho() {
     const el = document.getElementById('baralho');
     el.innerHTML = '';
@@ -121,7 +118,7 @@ function criarBaralho() {
     }
 }
 
-/* ── MESA ── */
+/* MESA */
 function criarMesa() {
     const el = document.getElementById('mesa');
     el.innerHTML = '';
@@ -133,7 +130,7 @@ function criarMesa() {
         const inner = document.createElement('div');
         inner.classList.add('carta-inner');
 
-        /* verso — de costas */
+        /* verso carta */
         const verso  = document.createElement('div');
         verso.classList.add('carta-verso');
         const imgV   = document.createElement('img');
@@ -141,7 +138,7 @@ function criarMesa() {
         imgV.alt = '';
         verso.appendChild(imgV);
 
-        /* frente — face da carta */
+        /* frente carta */
         const frente = document.createElement('div');
         frente.classList.add('carta-frente');
         const imgF   = document.createElement('img');
@@ -153,7 +150,7 @@ function criarMesa() {
         inner.appendChild(verso);
         slot.appendChild(inner);
 
-        /* clique — vira e abre modal */
+        /* clique = vira e abre modal */
         slot.addEventListener('click', () => {
             if (!slot.classList.contains('ativa')) return;
             slot.classList.toggle('virada');
@@ -166,16 +163,53 @@ function criarMesa() {
     });
 }
 
-/* ── DISTRIBUI ── */
+/* posição do braço (ponto de lançamento) */
+function getPosicaoBrac() {
+    const brac = document.getElementById('brac');
+    const rect = brac.getBoundingClientRect();
+    return {
+        x: rect.left + rect.width * 0.20,
+        y: rect.top  + rect.height * 0.50,
+    };
+}
+
 function distribuir(i) {
+    /* some a carta do topo do baralho */
     const cb = document.getElementById(`b${TOTAL - 1 - i}`);
     if (cb) { cb.style.opacity = '0'; setTimeout(() => cb.remove(), 300); }
 
     const cm = document.getElementById(`m${i}`);
-    if (cm) cm.classList.add('ativa');
+    if (!cm) return;
+
+    /* posição destino (slot na mesa) */
+    const destRect = cm.getBoundingClientRect();
+    const destX    = destRect.left + destRect.width  / 2;
+    const destY    = destRect.top  + destRect.height / 2;
+
+    /* posição origem: o baralho empilhado */
+    const baralho  = document.getElementById('baralho');
+    const origRect = baralho.getBoundingClientRect();
+    const origX    = origRect.left + origRect.width  / 2;
+    const origY    = origRect.top  + origRect.height / 2;
+
+    /* delta: de onde a carta VEM em relação ao destino */
+    const dx  = origX - destX;
+    const dy  = origY - destY;
+    const rot = dx > 0 ? 25 : -25;
+
+    cm.style.setProperty('--dx-start', `${dx}px`);
+    cm.style.setProperty('--dy-start', `${dy}px`);
+    cm.style.setProperty('--rot-start', `${rot}deg`);
+
+    cm.classList.add('voando');
+
+    cm.addEventListener('animationend', () => {
+        cm.classList.remove('voando');
+        cm.classList.add('ativa');
+    }, { once: true });
 }
 
-/* ── MODAL ── */
+/* MODAL */
 function abrirModal(i) {
     const dia = dadosDias[i];
 
@@ -197,7 +231,7 @@ function fecharModal() {
     document.getElementById('modal-overlay').classList.remove('aberto');
 }
 
-/* ── GRÁFICO 4H ── */
+/* GRÁFICO 4H */
 function construirGrafico(dataStr) {
     const el = document.getElementById('grafico');
     el.innerHTML = '';
@@ -250,3 +284,33 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Enter') buscarClima();
     });
 });
+
+const objeto = document.querySelector('.brac');
+const graus = [60, 0, 50, 0 , 40, 0 ,32, 0, 24, 0, 18, 0, 12, 0, 6];
+const duracao = 400;
+
+async function balancodobrac() {
+  for (const grau of graus) { 
+    await objeto.animate(
+      [
+        { transform: 'rotate(0deg)' },
+        { transform: `rotate(${grau}deg)` }, 
+        { transform: 'rotate(0deg)' }
+      ],
+      {
+        duration: duracao,
+        easing: 'ease-in-out',
+        fill: 'forwards'
+      }
+    ).finished;
+  }
+}
+
+async function loop() {
+  while (true) {
+    await balancodobrac();
+    await new Promise(r => setTimeout(r, 1000)); // pausa entre ciclos
+  }
+}
+
+loop();
