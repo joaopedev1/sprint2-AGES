@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arcana do Tempo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="Cartas.css">
+</head>
+<body>
+
+  <!-- BUSCA -->
+  <div class="busca" id="busca">
+    <h1 class="titulo">Arcana do Tempo</h1>
+    <p class="subtitulo">As cartas revelam o que os céus guardam</p>
+    <div id="container">
+      <form id="search" onsubmit="event.preventDefault(); buscarClima();">
+        <i class="fa-solid fa-location-dot"></i>
+        <input type="search"
+          name="city_name"
+          id="cidade-input"
+          placeholder="Buscar cidade" />
+        <button type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+    </div>
+    <p class="erro" id="erro"></p>
+  </div>
+
+  <!-- CENA PRINCIPAL -->
+  <div class="cena" id="cena" style="display:none;">
+
+    <!-- BRAÇO -->
+    <div class="mont">
+      <img src="SuperioreCotovelo.png" class="mem sup">
+      <img src="Braco.png" class="mem brac" id="brac">
+      <img src="CotoveloRetoMelhorado.png" class="mem cot">
+      <div class="baralho" id="baralho"></div>
+    </div>
+
+    <!-- MESA -->
+    <div class="mesa" id="mesa"></div>
+
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modal-overlay" onclick="fecharModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-fechar" onclick="fecharModal()">✕</button>
+      <div class="modal-header">
+        <img class="modal-carta" id="modal-carta" src="" alt="">
+        <div class="modal-info">
+          <h2 class="modal-titulo" id="modal-titulo"></h2>
+          <p  class="modal-data"   id="modal-data"></p>
+          <p  class="modal-clima"  id="modal-clima"></p>
+          <div class="modal-temps">
+            <span class="temp-max" id="modal-max"></span>
+            <span class="temp-min" id="modal-min"></span>
+          </div>
+          <div class="modal-stat">
+            <span>💧</span>
+            <span id="modal-chuva"></span>
+          </div>
+          <div class="modal-stat">
+            <span>💨</span>
+            <span id="modal-vento"></span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-grafico">
+        <p class="grafico-titulo">Temperatura a cada 1h</p>
+        <div class="grafico-wrap" id="grafico"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="Cartas.js"></script>
+</body>
+</html>
