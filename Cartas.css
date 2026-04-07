@@ -45,7 +45,7 @@ body {
     color: rgba(195, 155, 85, 1);
     text-align: center;
     letter-spacing: 0.08rem;
-    
+
 }
 
 .subtitulo {
@@ -279,8 +279,8 @@ body {
 .modal-overlay.aberto { display: flex; }
 
 .modal {
-    background: #1a1208;
-    border: 0.5px solid #7a5a28;
+    background: rgb(13, 28, 49, 0.9);
+    border: 0.3px solid rgba(195, 155, 85, 1);
     border-radius: 12px;
     padding: 1.5rem;
     width: min(800px, 92vw);
@@ -366,11 +366,11 @@ body {
 .grafico-titulo {
     font-family: "Libre Caslon Text", serif;
     font-size: 0.8rem;
-    color: #7a6040;
+    color: #c8a050;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     margin-bottom: 1rem;
-    border-top: 0.5px solid #3a2a10;
+    border-top: 0.4px solid #c8a050;
     padding-top: 1rem;
 }
 
@@ -379,7 +379,7 @@ body {
     align-items: flex-end;
     gap: 0.75rem;
     height: 100px;
-    padding-bottom: 0.5rem;
+    padding-top: 8.5rem;
 }
 
 .grafico-col {
@@ -398,5 +398,10 @@ body {
     transition: height 0.5s;
 }
 
-.grafico-hora { font-size: 10px; color: #5a4a28; }
-.grafico-temp { font-size: 11px; color: #e8d4a0; font-family: "Libre Caslon Text", serif; }
+.grafico-hora {
+     font-size: 10px; color: #e8d4a0; 
+}
+
+.grafico-temp { 
+    font-size: 11px; color: #e8d4a0; font-family: "Libre Caslon Text", serif; 
+}
