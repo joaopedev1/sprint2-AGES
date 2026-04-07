@@ -231,7 +231,7 @@ function fecharModal() {
     document.getElementById('modal-overlay').classList.remove('aberto');
 }
 
-/* GRÁFICO 4H */
+/* GRÁFICO 1H */
 function construirGrafico(dataStr) {
     const el = document.getElementById('grafico');
     el.innerHTML = '';
