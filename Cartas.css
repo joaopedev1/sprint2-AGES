@@ -31,19 +31,29 @@ body {
     gap: 1rem;
 }
 
+.containerfundo {   
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    height: 60vh;
+    padding-top: 132.8px;
+}
+
 .titulo {
     font-family: "Libre Caslon Text", serif;
-    font-size: 2.2rem;
+    font-size: 2.5rem;
+    text-shadow: 0px 0px 5px black;
     color: rgba(195, 155, 85, 1);
     text-align: center;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.08rem;
+    
 }
 
 .subtitulo {
-    font-size: 1rem;
-    color: rgba(195, 155, 85, 0.7);
+    font-size: 1.75rem;
+    color: rgba(195, 155, 85, 0.98);
     font-style: italic;
-    font-weight: 400;
+    font-weight: 500;
+    text-shadow: 0px 0px 5px black;
     text-align: center;
     margin-bottom: 0.5rem;
 }
