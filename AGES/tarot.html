@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previsão Tarot - 8 Dias</title>
+    <link rel="stylesheet" href="tarot.css">
+</head>
+<body>
+
+    <div class="mesa">
+        
+        <!-- O título some quando o baralho é clicado -->
+        <h1 id="instrucao">Clique no baralho para ler o clima</h1>
+
+        <!-- O bolo de cartas (Baralho) -->
+        <div class="baralho" id="baralho">
+            
+            <!-- CARTA 1: HOJE -->
+            <div class="carta" style="--i: 1;">
+                <img class="bg-arte" src="1.jpeg" alt="Sol" onerror="this.style.display='none'">
+                <div class="info-clima">
+                    <h3>Hoje</h3>
+                    <p class="temp">28°C</p>
+                </div>
+            </div>
+
+            <!-- CARTA 2 -->
+            <div class="carta" style="--i: 2;">
+                <img class="bg-arte" src="2.jpeg" alt="Chuva" onerror="this.style.display='none'">
+                <div class="info-clima">
+                    <h3>Amanhã</h3>
+                    <p class="temp">22°C</p>
+                </div>
+            </div>
+
+            <!-- CARTA 3 -->
+            <div class="carta" style="--i: 3;">
+                <img class="bg-arte" src="3.jpeg" alt="Tempestade" onerror="this.style.display='none'">
+                <div class="info-clima">
+                    <h3>Qua</h3>
+                    <p class="temp">18°C</p>
+                </div>
+            </div>
+
+            <!-- CARTA 4 -->
+            <div class="carta" style="--i: 4;">
+                <img class="bg-arte" src="4.jpeg" alt="Nublado" onerror="this.style.display='none'">
+                <div class="info-clima">
+                    <h3>Qui</h3>
+                    <p class="temp">20°C</p>
+                </div>
+            </div>
+
+            <!-- CARTA 5 -->
+            <div class="carta" style="--i: 5;">
+                <img class="bg-arte" src="1.jpeg" alt="Noite" onerror="this.style.display='none'">
+                <div class="info-clima">
+                    <h3>Sex</h3>
+                    <p class="temp">15°C</p>
+                </div>
+            </div>
+
+            <!-- CARTA 6 -->
+            <div class="carta" style="--i: 6;">
+                <img class="bg-arte" src="1.jpeg" alt="Sol" onerror="this.style.display='none'">
+                <div class="info-clima">
+                    <h3>Sáb</h3>
+                    <p class="temp">27°C</p>
+                </div>
+            </div>
+
+            <!-- CARTA 7 -->
+            <div class="carta" style="--i: 7;">
+                <img class="bg-arte" src="4.jpeg" alt="Nublado" onerror="this.style.display='none'">
+                <div class="info-clima">
+                    <h3>Dom</h3>
+                    <p class="temp">24°C</p>
+                </div>
+            </div>
+
+            <!-- CARTA 8 -->
+            <div class="carta" style="--i: 8;">
+                <img class="bg-arte" src="3.jpeg" alt="Chuva" onerror="this.style.display='none'">
+                <div class="info-clima">
+                    <h3>Seg</h3>
+                    <p class="temp">21°C</p>
+                </div>
+            </div>
+
+            <!-- CARTA FAKE (Apenas para ser o "verso" visível quando empilhadas) -->
+            <div class="carta capa-baralho">
+                <!-- Coloque a imagem do verso do baralho aqui -->
+                <img class="bg-arte" src="1.jpeg" alt="Verso" onerror="this.style.display='none'">
+            </div>
+
+        </div>
+    </div>
+
+    <script src="tarot.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #f0f0f0;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.braco-wrap {
+    position: absolute;
+    top: -6vw;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 45vw;
+    height: 45vw;
+}
+
+/*
+  CAMADA 1 — antebraço animado
+  transform-origin: X% Y%
+  X = 38% (cotovelo horizontal)
+  Y = 55% (cotovelo vertical)
+*/
+.braco-baixo {
+    position: absolute;
+    width: 100%;
+    top: 0; left: 0;
+    z-index: 1;
+    transform-origin: 34% 46%;
+    animation: lancar 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/*
+  CAMADA 2 — braço superior estático
+  clip-path corta na linha diagonal do cotovelo
+*/
+
+/* corte mais alto e mais inclinado para acompanhar o músculo */
+.braco-cima {
+    clip-path: polygon(
+        0%   0%,
+        100% 0%,
+        45%  38%,   /* bem mais baixo */
+        0%   34%    /* bem mais baixo */
+    );
+}
+
+/*
+  Animação refinada — lenta e mística
+  
+  cubic-bezier(0.4, 0, 0.2, 1) — começa devagar,
+  acelera no meio e desacelera no fim.
+  Parece muito mais natural que ease-in-out.
+
+  O movimento vai para a esquerda (-25deg)
+  simulando o gesto de lançar cartas.
+*/
+@keyframes lancar {
+    0%   { transform: rotate(0deg);   }
+
+    /* aceleração suave até o pico */
+    35%  { transform: rotate(-25deg); }
+
+    /* leve hesitação — parece peso real */
+    50%  { transform: rotate(-20deg); }
+
+    /* volta devagar */
+    80%  { transform: rotate(-5deg);  }
+
+    100% { transform: rotate(0deg);   }
+}
