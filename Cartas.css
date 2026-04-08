@@ -9,7 +9,6 @@
     box-sizing: border-box;
 }
 
-/* ── TELA DE BUSCA ── */
 body {
     display: flex;
     align-items: center;
@@ -100,7 +99,6 @@ body {
     min-height: 1.2em;
 }
 
-/* ── CENA PRINCIPAL ── */
 .cena {
     position: fixed;
     inset: 0;
@@ -147,27 +145,14 @@ body {
     transform-origin: 20% 50%;
 }
 
-/* ANIMAÇÃO CARTA – voo do baralho até a mesa */
-@keyframes voo {
-    0%   { transform: translate(var(--dx-start), var(--dy-start)) rotate(var(--rot-start)) scale(1.1); opacity: 1; }
-    60%  { opacity: 1; }
-    100% { transform: translate(0px, 0px) rotate(0deg) scale(1); opacity: 1; }
-}
-
-.carta-mesa.voando {
-    opacity: 1 !important;
-    animation: voo 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-}
-
-/* ── BARALHO ── */
 .baralho {
     position: absolute;
-    top: 8vw;
-    left: 50%;
+    top: 16vw;        /* empurra para baixo, na altura da mão */
+    left: 65%;        /* alinha com a ponta dos dedos */
     transform: translateX(-50%);
     width: 9vw;
     height: 13vw;
-    z-index: 10;
+    z-index: 2;       /* abaixo do braço (z-index 3) mas acima do fundo */
 }
 
 .carta-baralho {
@@ -184,7 +169,6 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: rotate(180deg);
 }
 
 .carta-baralho:nth-child(1) { top:  0px; left:  0px; }
@@ -196,7 +180,6 @@ body {
 .carta-baralho:nth-child(7) { top: -6px; left: -6px; }
 .carta-baralho:nth-child(8) { top: -7px; left: -7px; }
 
-/* ── MESA ── */
 .mesa {
     position: fixed;
     bottom: 5vh;
@@ -208,7 +191,6 @@ body {
     z-index: 5;
 }
 
-/* ── CARTA NA MESA ── */
 .carta-mesa {
     width: 9vw;
     height: 13vw;
@@ -217,19 +199,16 @@ body {
     box-shadow: 0 4px 16px rgba(0,0,0,0.5);
     cursor: pointer;
     perspective: 800px;
-    opacity: 0;
-    transform: translateY(-55vh);
-    transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
 }
 
 .carta-mesa.ativa {
     opacity: 1;
-    transform: translateY(0);
 }
 
-.carta-mesa:hover .carta-inner { transform: scale(1.04); }
+.carta-mesa:hover .carta-inner {
+    transform: scale(1.04);
+}
 
-/* flip 3D */
 .carta-inner {
     position: relative;
     width: 100%;
@@ -255,7 +234,6 @@ body {
 
 .carta-verso { transform: rotateY(180deg); }
 
-/* ── MODAL ── */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -352,7 +330,6 @@ body {
     margin-bottom: 0.25rem;
 }
 
-/* ── GRÁFICO ── */
 .grafico-titulo {
     font-family: "Libre Caslon Text", serif;
     font-size: 0.8rem;
@@ -388,5 +365,9 @@ body {
     transition: height 0.5s;
 }
 
-.grafico-hora { font-size: 10px; color: #5a4a28; }
-.grafico-temp { font-size: 11px; color: #e8d4a0; font-family: "Libre Caslon Text", serif; }
+.grafico-hora { 
+    font-size: 10px; color: #5a4a28; 
+}
+.grafico-temp { 
+    font-size: 11px; color: #e8d4a0; font-family: "Libre Caslon Text", serif; 
+}
