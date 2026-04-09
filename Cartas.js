@@ -30,7 +30,7 @@ function wmoParaCondicao(code, isDay) {
     return isDay ? 'sol' : 'noite';
 }
 
-const dia  = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+const semana  = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
 const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 const total    = 8;
 
@@ -89,7 +89,7 @@ function processarDiario(data) {
         const date = new Date(dateStr + 'T12:00:00');
         return {
             data: dateStr,
-            diaSem: i === 0 ? 'Hoje' : dia[date.getDay()],
+            diaSem: i === 0 ? 'Hoje' : semana[date.getDay()],
             dataFmt: `${date.getDate()} ${meses[date.getMonth()]}`,
             condicao,
             carta: CARTA_MAP[condicao],
