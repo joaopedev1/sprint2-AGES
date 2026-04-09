@@ -20,7 +20,7 @@
         <i class="fa-solid fa-location-dot"></i>
         <input type="search"
           name="city_name"
-          id="cidade-input"
+          id="cidadeinput"
           placeholder="Buscar cidade"
            autocomplete="off" />
         <button type="submit">
@@ -48,32 +48,32 @@
   </div>
 
   <!-- MODAL -->
-  <div class="modal-overlay" id="modal-overlay" onclick="fecharModal()">
+  <div class="modaloverlay" id="modaloverlay" onclick="fecharModal()">
     <div class="modal" onclick="event.stopPropagation()">
-      <button class="modal-fechar" onclick="fecharModal()">✕</button>
-      <div class="modal-header">
-        <img class="modal-carta" id="modal-carta" src="" alt="">
-        <div class="modal-info">
-          <h2 class="modal-titulo" id="modal-titulo"></h2>
-          <p  class="modal-data"   id="modal-data"></p>
-          <p  class="modal-clima"  id="modal-clima"></p>
-          <div class="modal-temps">
-            <span class="temp-max" id="modal-max"></span>
-            <span class="temp-min" id="modal-min"></span>
+      <button class="modalfechar" onclick="fecharModal()">✕</button>
+      <div class="modalheader">
+        <img class="modalcarta" id="modalcarta" src="" alt="">
+        <div class="modalinfo">
+          <h2 class="modaltitulo" id="modaltitulo"></h2>
+          <p  class="modaldata"   id="modaldata"></p>
+          <p  class="modalclima"  id="modalclima"></p>
+          <div class="modaltemps">
+            <span class="tempmax" id="modalmax"></span>
+            <span class="tempmin" id="modalmin"></span>
           </div>
-          <div class="modal-stat">
+          <div class="modalstat">
             <span>💧</span>
-            <span id="modal-chuva"></span>
+            <span id="modalchuva"></span>
           </div>
-          <div class="modal-stat">
+          <div class="modalstat">
             <span>💨</span>
-            <span id="modal-vento"></span>
+            <span id="modalvento"></span>
           </div>
         </div>
       </div>
-      <div class="modal-grafico">
-        <p class="grafico-titulo">Temperatura a cada 1h</p>
-        <div class="grafico-wrap" id="grafico"></div>
+      <div class="modalgrafico">
+        <p class="graficotitulo">Temperatura a cada 1h</p>
+        <div class="graficowrap" id="grafico"></div>
       </div>
     </div>
   </div>

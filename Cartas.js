@@ -1,3 +1,19 @@
+function precarregarImagens() {
+    const imgs = [
+        'BackCard.png',
+        'Sun.jpeg', 'Rain.jpeg', 'Storm.jpeg', 'Cloudy.jpeg', 'Night.jpeg',
+        'Fundo.png', 'SuperioreCotovelo.png', 'Braco.png', 'CotoveloRetoMelhorado.png'
+    ];
+    return Promise.all(imgs.map(src => {
+        return new Promise(resolve => {
+            const img = new Image();
+            img.onload  = resolve;
+            img.onerror = resolve; // resolve mesmo se falhar
+            img.src     = src;
+        });
+    }));
+}
+
 const CARTA_MAP = {
     sol:        { img: 'Sun.jpeg',    nome: 'The Sun',    desc: 'Céu limpo'       },
     chuva:      { img: 'Rain.jpeg',   nome: 'The Rain',   desc: 'Chuva'           },
@@ -14,27 +30,27 @@ function wmoParaCondicao(code, isDay) {
     return isDay ? 'sol' : 'noite';
 }
 
-const DIAS_PT  = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
-const MESES_PT = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-const TOTAL    = 8;
+const dia  = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const total    = 8;
 
-let dadosDias    = [];
-let dadosHorario = [];
+let previsao    = [];
+let horario = [];
 
 async function buscarClima() {
-    const cidade = document.getElementById('cidade-input').value.trim();
+    const cidade = document.getElementById('cidadeinput').value.trim();
     if (!cidade){
         return;
     } 
 
-    const erroEl = document.getElementById('erro');
-    erroEl.textContent = 'Consultando os oráculos...';
+    const erro = document.getElementById('erro');
+    erro.textContent = 'Consultando os oráculos...';
 
     try {
         const geoRes  = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cidade)}&count=1&language=pt&format=json`);
         const geoData = await geoRes.json();
         if (!geoData.results?.length) { 
-            erroEl.textContent = 'Cidade não encontrada.'; return; 
+            erro.textContent = 'Cidade não encontrada.'; return; 
         }
 
         const { latitude, longitude } = geoData.results[0];
@@ -49,14 +65,18 @@ async function buscarClima() {
         );
         const wData = await wRes.json();
 
-        dadosDias = processarDiario(wData);
-        dadosHorario = wData.hourly;
+        previsao = processarDiario(wData);
+        horario = wData.hourly;
 
-        erroEl.textContent = '';
+        previsao    = processarDiario(wData);
+        horario = wData.hourly;
+
+        erro.textContent = '';
+        await precarregarImagens(); // ← adiciona aqui
         iniciarCena();
 
     } catch(e) {
-        erroEl.textContent = 'Erro ao buscar dados. Tente novamente.';
+        erro.textContent = 'Erro ao buscar dados. Tente novamente.';
     }
 }
 
@@ -69,8 +89,8 @@ function processarDiario(data) {
         const date = new Date(dateStr + 'T12:00:00');
         return {
             data: dateStr,
-            diaSem: i === 0 ? 'Hoje' : DIAS_PT[date.getDay()],
-            dataFmt: `${date.getDate()} ${MESES_PT[date.getMonth()]}`,
+            diaSem: i === 0 ? 'Hoje' : dia[date.getDay()],
+            dataFmt: `${date.getDate()} ${meses[date.getMonth()]}`,
             condicao,
             carta: CARTA_MAP[condicao],
             tMax: Math.round(daily.temperature_2m_max[i]),
@@ -85,6 +105,14 @@ function iniciarCena() {
     document.getElementById('busca').style.display = 'none';
     document.getElementById('cena').style.display  = 'block';
 
+    let cidadeEl = document.getElementById('cidadedisplay')
+    if(!cidadeEl){
+        cidadeEl = document.createElement('div');
+        cidadeEl.id = 'cidadedisplay';
+        document.getElementById('cena').appendChild(cidadeEl);
+    }
+    cidadeEl.textContent = document.getElementById('cidadeinput').value.trim();
+
     const brac = document.getElementById('brac');
     brac.getAnimations().forEach(a => a.cancel());
 
@@ -97,9 +125,9 @@ function iniciarCena() {
 function criarBaralho() {
     const el = document.getElementById('baralho');
     el.innerHTML = '';
-    for (let i = 0; i < TOTAL; i++) {
+    for (let i = 0; i < total; i++) {
         const slot = document.createElement('div');
-        slot.classList.add('carta-baralho');
+        slot.classList.add('cartabaralho');
         slot.id = `b${i}`;
         const img = document.createElement('img');
         img.src = 'BackCard.png'; // ← sempre o verso
@@ -113,25 +141,25 @@ function criarMesa() {
     const el = document.getElementById('mesa');
     el.innerHTML = '';
 
-    dadosDias.forEach((dia, i) => {
+    previsao.forEach((dia, i) => {
         const slot = document.createElement('div');
-        slot.classList.add('carta-mesa');
+        slot.classList.add('cartamesa');
         slot.id = `m${i}`;
         slot.style.opacity    = '0';
         slot.style.visibility = 'hidden';
 
         const inner  = document.createElement('div');
-        inner.classList.add('carta-inner');
+        inner.classList.add('cartainner');
 
         const verso  = document.createElement('div');
-        verso.classList.add('carta-verso');
+        verso.classList.add('cartaverso');
         const imgV   = document.createElement('img');
         imgV.src = dia.carta.img;
         imgV.alt = '';
         verso.appendChild(imgV);
 
         const frente = document.createElement('div');
-        frente.classList.add('carta-frente');
+        frente.classList.add('cartafrente');
         const imgF   = document.createElement('img');
         imgF.src = 'BackCard.png';
         imgF.alt = dia.carta.nome;
@@ -152,7 +180,7 @@ function criarMesa() {
 }
 
 function distribuir(i) {
-    const cb = document.getElementById(`b${TOTAL - 1 - i}`);
+    const cb = document.getElementById(`b${total - 1 - i}`);
     if (cb) {
         cb.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, fill: 'forwards' });
         setTimeout(() => cb.remove(), 220);
@@ -216,7 +244,7 @@ async function balancodobrac() {
             [{ transform: 'rotate(0deg)' }, { transform: `rotate(${grau}deg)` }], { duration: dur, easing: 'ease-out', fill: 'forwards' }
         ).finished;
 
-        if (i < dadosDias.length) distribuir(i);
+        if (i < previsao.length) distribuir(i);
 
         await objeto.animate(
             [{ transform: `rotate(${grau}deg)` }, { transform: 'rotate(0deg)' }], { duration: dur, easing: 'ease-in', fill: 'forwards' }
@@ -229,29 +257,29 @@ async function balancodobrac() {
 }
 
 function abrirModal(i) {
-    const dia = dadosDias[i];
-    document.getElementById('modal-carta').src = dia.carta.img;
-    document.getElementById('modal-titulo').textContent = dia.carta.nome;
-    document.getElementById('modal-data').textContent = `${dia.diaSem} · ${dia.dataFmt}`;
-    document.getElementById('modal-clima').textContent = dia.carta.desc;
-    document.getElementById('modal-max').textContent = `${dia.tMax}°`;
-    document.getElementById('modal-min').textContent = `${dia.tMin}°`;
-    document.getElementById('modal-chuva').textContent = `${dia.chuva}% chance de chuva`;
-    document.getElementById('modal-vento').textContent = `${dia.vento} km/h vento`;
+    const dia = previsao[i];
+    document.getElementById('modalcarta').src = dia.carta.img;
+    document.getElementById('modaltitulo').textContent = dia.carta.nome;
+    document.getElementById('modaldata').textContent = `${dia.diaSem} · ${dia.dataFmt}`;
+    document.getElementById('modalclima').textContent = dia.carta.desc;
+    document.getElementById('modalmax').textContent = `${dia.tMax}°`;
+    document.getElementById('modalmin').textContent = `${dia.tMin}°`;
+    document.getElementById('modalchuva').textContent = `${dia.chuva}% chance de chuva`;
+    document.getElementById('modalvento').textContent = `${dia.vento} km/h vento`;
     construirGrafico(dia.data);
-    document.getElementById('modal-overlay').classList.add('aberto');
+    document.getElementById('modaloverlay').classList.add('aberto');
 }
 
 function fecharModal() {
-    document.getElementById('modal-overlay').classList.remove('aberto');
+    document.getElementById('modaloverlay').classList.remove('aberto');
 }
 
 function construirGrafico(dataStr) {
     const el = document.getElementById('grafico');
     el.innerHTML = '';
 
-    const horas  = dadosHorario.time;
-    const temps  = dadosHorario.temperature_2m;
+    const horas  = horario.time;
+    const temps  = horario.temperature_2m;
     const pontos = [];
 
     horas.forEach((h, idx) => {
@@ -268,20 +296,20 @@ function construirGrafico(dataStr) {
 
     pontos.forEach(p => {
         const col   = document.createElement('div');
-        col.classList.add('grafico-col');
+        col.classList.add('graficocol');
 
         const altura = Math.round(((p.temp - minT) / range) * 70 + 20);
 
         const temp  = document.createElement('div');
-        temp.classList.add('grafico-temp');
+        temp.classList.add('graficotemp');
         temp.textContent = `${p.temp}°`;
 
         const barra = document.createElement('div');
-        barra.classList.add('grafico-barra');
+        barra.classList.add('graficobarra');
         barra.style.height = `${altura}px`;
 
         const hora  = document.createElement('div');
-        hora.classList.add('grafico-hora');
+        hora.classList.add('graficohora');
         hora.textContent = p.hora;
 
         col.appendChild(temp);
@@ -292,7 +320,7 @@ function construirGrafico(dataStr) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('cidade-input').addEventListener('keydown', e => {
+    document.getElementById('cidadeinput').addEventListener('keydown', e => {
         if (e.key === 'Enter') buscarClima();
     });
 });
