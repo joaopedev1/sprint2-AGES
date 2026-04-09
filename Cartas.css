@@ -310,7 +310,7 @@ body {
 
 .modaldata {
     font-size: 0.85rem;
-    color: #7a6040;
+    color: #ffffff;
     margin-bottom: 0.5rem;
     font-style: italic;
 }
@@ -400,8 +400,9 @@ body {
     transform: translateX(-50%);
     font-family: "Libre Caslon Text", serif;
     font-size: 1.4vw;
-    color: rgba(37, 36, 36, 0.9);
+    color: rgba(255, 255, 255, 0.9);
     letter-spacing: 0.1em;
-    z-index: 10;
+    z-index:1;
     text-transform: uppercase;
+    mix-blend-mode: hard-light;
 }
