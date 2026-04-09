@@ -43,17 +43,20 @@ body {
 
 .titulo {
     font-family: "Libre Caslon Text", serif;
-    font-size: 2.2rem;
+    font-size: 2.5rem;
+    text-shadow: 0px 0px 5px black;
     color: rgba(195, 155, 85, 1);
     text-align: center;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.08rem;
+
 }
 
 .subtitulo {
     font-size: 1rem;
     color: rgba(195, 155, 85, 0.98);
     font-style: italic;
-    font-weight: 400;
+    font-weight: 500;
+    text-shadow: 0px 0px 5px black;
     text-align: center;
     margin-bottom: 0.5rem;
 }
@@ -260,7 +263,7 @@ body {
 }
 
 .modal {
-    background:  rgb(13, 28, 49, 0.9);
+    background: rgb(13, 28, 49, 0.9);
     border: 0.3px solid rgba(195, 155, 85, 1);
     border-radius: 12px;
     padding: 1.5rem;
@@ -348,7 +351,7 @@ body {
 .graficotitulo {
     font-family: "Libre Caslon Text", serif;
     font-size: 0.8rem;
-    color: #7a6040;
+    color: #c8a050;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     margin-bottom: 1rem;
@@ -401,4 +404,3 @@ body {
     letter-spacing: 0.1em;
     z-index: 10;
     text-transform: uppercase;
-}
