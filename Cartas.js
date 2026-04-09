@@ -190,13 +190,13 @@ function distribuir(i) {
     if (!cm) return;
 
     const baralho  = document.getElementById('baralho');
-    const origRect = baralho.getBoundingClientRect();
-    const destRect = cm.getBoundingClientRect();
+    const orig = baralho.getBoundingClientRect();
+    const dest = cm.getBoundingClientRect();
 
-    const ox = origRect.left + origRect.width  / 2;
-    const oy = origRect.top  + origRect.height / 2;
-    const dx = destRect.left + destRect.width  / 2;
-    const dy = destRect.top  + destRect.height / 2;
+    const ox = orig.left + orig.width  / 2;
+    const oy = orig.top  + orig.height / 2;
+    const dx = dest.left + dest.width  / 2;
+    const dy = dest.top  + dest.height / 2;
 
     const tx  = ox - dx;
     const ty  = oy - dy;
@@ -235,10 +235,10 @@ async function balancodobrac() {
     objeto.getBoundingClientRect();
 
     const dur     = 380;
-    const batidas = [60, 50, 45, 38, 30, 22, 12, 6];
+    const seq = [60, 50, 45, 38, 30, 22, 12, 6];
 
-    for (let i = 0; i < batidas.length; i++) {
-        const grau = batidas[i];
+    for (let i = 0; i < seq.length; i++) {
+        const grau = seq[i];
         
         await objeto.animate(
             [{ transform: 'rotate(0deg)' }, { transform: `rotate(${grau}deg)` }], { duration: dur, easing: 'ease-out', fill: 'forwards' }
@@ -257,16 +257,16 @@ async function balancodobrac() {
 }
 
 function abrirModal(i) {
-    const dia = previsao[i];
-    document.getElementById('modalcarta').src = dia.carta.img;
-    document.getElementById('modaltitulo').textContent = dia.carta.nome;
-    document.getElementById('modaldata').textContent = `${dia.diaSem} · ${dia.dataFmt}`;
-    document.getElementById('modalclima').textContent = dia.carta.desc;
-    document.getElementById('modalmax').textContent = `${dia.tMax}°`;
-    document.getElementById('modalmin').textContent = `${dia.tMin}°`;
-    document.getElementById('modalchuva').textContent = `${dia.chuva}% chance de chuva`;
-    document.getElementById('modalvento').textContent = `${dia.vento} km/h vento`;
-    construirGrafico(dia.data);
+    const item = previsao[i];
+    document.getElementById('modalcarta').src = item.carta.img;
+    document.getElementById('modaltitulo').textContent = item.carta.nome;
+    document.getElementById('modaldata').textContent = `${item.diaSem} · ${item.dataFmt}`;
+    document.getElementById('modalclima').textContent = item.carta.desc;
+    document.getElementById('modalmax').textContent = `${item.tMax}°`;
+    document.getElementById('modalmin').textContent = `${item.tMin}°`;
+    document.getElementById('modalchuva').textContent = `${item.chuva}% chance de chuva`;
+    document.getElementById('modalvento').textContent = `${item.vento} km/h vento`;
+    construirGrafico(item.data);
     document.getElementById('modaloverlay').classList.add('aberto');
 }
 
@@ -290,15 +290,15 @@ function construirGrafico(dataStr) {
 
     if (!pontos.length) return;
 
-    const maxT  = Math.max(...pontos.map(p => p.temp));
-    const minT  = Math.min(...pontos.map(p => p.temp));
-    const range = maxT - minT || 1;
+    const max  = Math.max(...pontos.map(p => p.temp));
+    const min  = Math.min(...pontos.map(p => p.temp));
+    const range = max - min || 1;
 
     pontos.forEach(p => {
         const col   = document.createElement('div');
         col.classList.add('graficocol');
 
-        const altura = Math.round(((p.temp - minT) / range) * 70 + 20);
+        const altura = Math.round(((p.temp - min) / range) * 70 + 20);
 
         const temp  = document.createElement('div');
         temp.classList.add('graficotemp');
